@@ -1,4 +1,4 @@
-module HelloWorld.Data.Types where
+module Data.HelloWorld.Data.Types where
 
 import Data.SPL
 

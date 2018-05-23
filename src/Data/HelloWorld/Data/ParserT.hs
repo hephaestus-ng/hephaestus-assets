@@ -1,9 +1,9 @@
-module HelloWorld.Data.ParserT where
+module Data.HelloWorld.Data.ParserT where
 
 import Text.Parsec
 import Text.Parsec.String
 
-import HelloWorld.Data.Types
+import Data.HelloWorld.Data.Types
 
 import Data.SPL
 

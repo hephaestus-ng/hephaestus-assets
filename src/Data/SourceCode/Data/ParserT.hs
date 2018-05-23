@@ -1,10 +1,10 @@
-module SourceCode.Data.ParserT where
+module Data.SourceCode.Data.ParserT where
 
 import Text.Parsec
 -- import Text.Parsec.Token hiding (commaSep)
 import Text.Parsec.String
 
-import SourceCode.Data.Types
+import Data.SourceCode.Data.Types
 import Data.SPL
 
 

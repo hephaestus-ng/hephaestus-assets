@@ -1,7 +1,7 @@
-module HelloWorld.Data.Asset where
+module Data.HelloWorld.Data.Asset where
 
-import HelloWorld.Data.Types
-import HelloWorld.Data.ParserT
+import Data.HelloWorld.Data.Types
+import Data.HelloWorld.Data.ParserT
 
 import Data.SPL
 

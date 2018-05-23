@@ -1,12 +1,13 @@
 {-# LANGUAGE TemplateHaskell #-}
 
-module SourceCode.Data.Types where
+module Data.SourceCode.Data.Types where
 
 import Control.Lens
 import Data.SPL
 
 type Tag      = String
 type FileName = String
+
 
 data ComponentModel = ComponentModel {
   _includedFiles   :: [FileName],
@@ -17,8 +18,13 @@ data ComponentModel = ComponentModel {
 makeLenses ''ComponentModel
 
 
+
+
 selectComponents :: [String] -> Transformation ComponentModel
-selectComponents s _ = fmap $ over (includedFiles) (s ++)
+selectComponents inn _ = fmap $ over (includedFiles) (inn ++)
+
+removeComponents :: [String] -> Transformation ComponentModel
+removeComponents ex _ = fmap $ over (excludedFiles) (ex ++)
 
 define :: Tag -> Transformation ComponentModel
 define t _ = fmap $ over (includedTags) (t :)
