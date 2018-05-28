@@ -31,8 +31,8 @@ parseDefine =
 parseRemove :: Parsec String () (Transformation ComponentModel)
 parseRemove =
   string "remove" >> many space >> string "("
-  >> parseName >>= \tag -> string ")" >>
-  return (removeComponents tag)
+  >> names >>= \rs -> string ")" >>
+  return (removeComponents rs)
 
 
 parseName :: Parsec String () String
@@ -41,6 +41,6 @@ parseName =
 
 
 names =
-  (parseName >>= \n -> char ',' >> names >>= \ns -> return (n:ns))
+  try (parseName >>= \n -> char ',' >> names >>= \ns -> return (n:ns))
   <|>
   (parseName >>= \r -> return [r])
