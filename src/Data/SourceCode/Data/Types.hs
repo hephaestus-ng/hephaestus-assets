@@ -19,7 +19,6 @@ makeLenses ''ComponentModel
 
 
 
-
 selectComponents :: [String] -> Transformation ComponentModel
 selectComponents inn _ = fmap $ over (includedFiles) (inn ++)
 
