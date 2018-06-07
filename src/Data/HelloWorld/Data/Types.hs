@@ -6,6 +6,8 @@ data HwAsset = HwAsset {
   msg :: String
 } deriving (Show)
 
--- Transformation
+
+-- Transformations
+
 setMessage :: String -> Transformation HwAsset
 setMessage s _ (Product p) = Product $ p { msg = s }
