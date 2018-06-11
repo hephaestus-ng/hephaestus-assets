@@ -3,20 +3,20 @@ module Data.StateMachine.Data.Asset where
 import Data.StateMachine.Data.ParserT
 import Data.StateMachine.Data.Types
 
-import SPL
+import Data.SPL
 
 
-instance Asset StateMachine = 
-  initialize = init
+instance Asset StateMachine where
+  initialize = Product $ initState
 
-  parserT = parserTranformation
+  parserT    = parserTransformation
 
-  export = undefined
-
-
+  export     = undefined
 
 
-init = StateMachine (State 1) [(State 1)] [t]
+
+
+initState = StateMachine (State "") [(State "")] [t]
 
 t :: Transition
-t s s = State $ s+s
+t (State s) = State s

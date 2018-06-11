@@ -22,6 +22,9 @@ description:         Please see the README on GitHub at <https://github.com/thi4
 dependencies:
 - base >= 4.7 && < 5
 - hephaestus-spl
+- hephaestus-fm
+- parsec
+- lens
 
 library:
   source-dirs: src
@@ -36,7 +39,6 @@ executables:
     - -with-rtsopts=-N
     dependencies:
     - hephaestus-assets
-    - hephaestus-spl
 
 tests:
   hephaestus-assets-test:
@@ -48,4 +50,3 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hephaestus-assets
-    - hephaestus-spl

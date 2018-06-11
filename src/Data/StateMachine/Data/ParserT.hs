@@ -1,6 +1,6 @@
 module Data.StateMachine.Data.ParserT where
 
-import Text.Parsec
+import Text.Parsec hiding (State)
 import Text.Parsec.String
 
 import Data.StateMachine.Data.Types
@@ -10,26 +10,31 @@ import Data.SPL
 parserTransformation :: Parsec String () (Transformation StateMachine)
 parserTransformation =
   parseInitialState <|>
-  parseStates       <|>
-
-
-parseInitialState :: Parsec String () (Transformation StateMachine)
-parseSelect =
-  string "setInitialState" >> many space >> string "("
-  >> names >>= \ns -> string ")" >>
-  return (setInitialState ns)
+  parseStates  
 
 
 parseStates :: Parsec String () (Transformation StateMachine)
-parseDefine =
+parseStates =
+  string "setInitialState" >> many space >> string "("
+  >> pStates >>= \ns -> string ")" >>
+  return (setStates ns)
+
+
+parseInitialState :: Parsec String () (Transformation StateMachine)
+parseInitialState =
   string "setStates" >> many space >> string "("
-  >> parseName >>= \tag -> string ")" >>
-  return (setStates tag)
+  >> parseState >>= \s -> string ")" >>
+  return (setInitialState s)
 
 
-names =
-  try (parseName >>= \n -> char ',' >> names >>= \ns -> return (n:ns))
+parseState :: Parsec String () State
+parseState =
+  string "\"" >> many1 letter >>= \c -> string "\"" >> return (State c)
+
+
+pStates =
+  try (parseState >>= \n -> char ',' >> pStates >>= \ns -> return (n:ns))
   <|>
-  (parseName >>= \r -> return [r])
+  (parseState >>= \r -> return [r])
   
 
