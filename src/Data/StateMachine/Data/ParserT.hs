@@ -1,4 +1,4 @@
-module ParserT where
+module Data.StateMachine.ParserT where
 
 import Text.Parsec
 import Text.Parsec.String
