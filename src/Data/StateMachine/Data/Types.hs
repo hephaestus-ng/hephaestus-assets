@@ -1,4 +1,4 @@
-module Data.StateMachine.Types where
+module Data.StateMachine.Data.Types where
 
 import Data.SPL
 
@@ -17,6 +17,7 @@ data StateMachine =
   }
 
 
+-- Transformations
 
 setInitialState :: State -> Transformation StateMachine
 setInitialState s _ (Product p) = 

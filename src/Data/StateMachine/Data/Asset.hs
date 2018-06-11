@@ -1,7 +1,7 @@
-module Data.StateMachine.Asset where
+module Data.StateMachine.Data.Asset where
 
-import Data.StateMachine.ParserT
-import Data.StateMachine.Types
+import Data.StateMachine.Data.ParserT
+import Data.StateMachine.Data.Types
 
 import SPL
 
@@ -9,9 +9,9 @@ import SPL
 instance Asset StateMachine = 
   initialize = init
 
-  parserT = parserTranformations
+  parserT = parserTranformation
 
-  export = 
+  export = undefined
 
 
 

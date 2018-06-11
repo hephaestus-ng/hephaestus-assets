@@ -1,4 +1,4 @@
-module Data.StateMachine.ParserT where
+module Data.StateMachine.Data.ParserT where
 
 import Text.Parsec
 import Text.Parsec.String
@@ -9,9 +9,8 @@ import Data.SPL
 
 parserTransformation :: Parsec String () (Transformation StateMachine)
 parserTransformation =
-  parseSelect <|>
-  parseDefine <|>
-  parseRemove
+  parseInitialState <|>
+  parseStates       <|>
 
 
 parseInitialState :: Parsec String () (Transformation StateMachine)
@@ -25,19 +24,7 @@ parseStates :: Parsec String () (Transformation StateMachine)
 parseDefine =
   string "setStates" >> many space >> string "("
   >> parseName >>= \tag -> string ")" >>
-  return (define tag)
-
-
-parseRemove :: Parsec String () (Transformation StateMachine)
-parseRemove =
-  string "remove" >> many space >> string "("
-  >> names >>= \rs -> string ")" >>
-  return (removeComponents rs)
-
-
-parseName :: Parsec String () String
-parseName =
-  string "\"" >> many1 letter >>= \c -> string "\"" >> return c
+  return (setStates tag)
 
 
 names =
