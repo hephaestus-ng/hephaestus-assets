@@ -9,7 +9,7 @@ import Data.SPL
 instance Asset StateMachine where
   initialize = Product $ initState
 
-  parserT    = parserTransformation
+  parserT    = parserStateMachine
 
   export     = undefined
 

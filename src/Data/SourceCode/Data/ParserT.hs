@@ -7,8 +7,8 @@ import Data.SourceCode.Data.Types
 import Data.SPL
 
 
-parserTransformation :: Parsec String () (Transformation ComponentModel)
-parserTransformation =
+parserSourceCode :: Parsec String () (Transformation ComponentModel)
+parserSourceCode =
   parseSelect <|>
   parseDefine <|>
   parseRemove

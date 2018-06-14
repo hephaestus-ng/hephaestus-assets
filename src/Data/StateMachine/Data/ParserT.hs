@@ -7,8 +7,8 @@ import Data.StateMachine.Data.Types
 import Data.SPL
 
 
-parserTransformation :: Parsec String () (Transformation StateMachine)
-parserTransformation =
+parserStateMachine :: Parsec String () (Transformation StateMachine)
+parserStateMachine =
   parseInitialState <|>
   parseStates  
 

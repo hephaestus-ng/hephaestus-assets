@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="1">
+		<struct>
+      <and mandatory="true" name="stateMachine">
+  			<alt mandatory="true" name="transition">
+          <feature mandatory="true" name="withConditions"/>
+          <feature mandatory="true" name="direct"/>
+  			</alt>
+				<alt mandatory="true" name="nodeType">
+          <feature mandatory="true" name="string"/>
+          <feature mandatory="true" name="numeric"/>
+          <feature mandatory="true" name="data"/>
+  			</alt>
+      </and>
+		</struct>
+    <calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

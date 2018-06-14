@@ -11,7 +11,7 @@ import Data.SPL
 
 instance Asset ComponentModel where
   initialize  = Product (ComponentModel [] [] [] [])
-  parserT     = parserTransformation
+  parserT     = parserSourceCode
 
   export src trg (Product prod) =
     bracket
