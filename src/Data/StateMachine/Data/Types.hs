@@ -2,38 +2,64 @@ module Data.StateMachine.Data.Types where
 
 -- import Data.SPL
 
+type Trace = [State]
+type Var = String
+type Label     = String
+type Origin    = State
+type Target    = State
+type Event     = String
+type Action    = [(Var -> (Int -> Int) -> StateMachine -> StateMachine)]
+type Condition = [(Var -> (Int -> Bool) -> StateMachine -> Bool)]
+type Memory = [(Var, Int)]
+
 data State =
-    InitialState String
-  | FinalState String
-  | State String
+    InitialState 
+  | FinalState
+  | State Label
   deriving (Show)
 
-type Transition = (State, State)
+type Transition =  (Origin, Event, Condition, Action, Target)
 
 data StateMachine =
   StateMachine {
-
     states :: [State],
-
-    transitions :: [Transition]
+    transitions :: [Transition],
+    memory :: Memory
   }
-  deriving (Show)
+
+
+-- typeChecker :: StateMachine -> Bool
+-- typeChecker = undefined
+
+-- run :: StateMachine -> [Event] -> (Trace, Memory)
+-- run = undefined
+
 
 -- Type checks
 -- - A state in a transition MUST exist in states
 -- - Exists InitialState and FinalState
 
-vendingMachine :: StateMachine
-vendingMachine =
-  StateMachine
-    [InitialState "start", State "insertMoney", State "countMoney", State "buyProduct", State "moneyError", FinalState "deliverProduct"]
-    [(InitialState "start", State "insertMoney"),
-     (State "insertMoney", State "countMoney"),
-     (State "countMoney", State "buyProduct"),
-     (State "buyProduct", State "moneyError"),
-     (State "moneyError", State "insertMoney"),
-     (State "buyProduct", FinalState "deliverProduct")
-    ]
+-- start, insert, count, buy, error, end :: State
+-- start = InitialState
+-- insert = State "insertMoney"
+-- count = State "countMoney"
+-- buy = State "buyMoney"
+-- error = State "moneyError"
+-- end = FinalState
+
+-- vendingMachine :: StateMachine
+-- vendingMachine =
+--   StateMachine
+--     [start, insert, count, buy, error, end]
+--     [(start, ""insert
+
+--        (InitialState "start", State "insertMoney"),
+--      (State "insertMoney", State "countMoney"),
+--      (State "countMoney", State "buyProduct"),
+--      (State "buyProduct", State "moneyError"),
+--      (State "moneyError", State "insertMoney"),
+--      (State "buyProduct", FinalState "deliverProduct")
+--     ]
 
 
 
