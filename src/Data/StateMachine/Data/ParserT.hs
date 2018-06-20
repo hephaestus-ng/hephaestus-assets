@@ -10,12 +10,12 @@ import Data.SPL
 parserStateMachine :: Parsec String () (Transformation StateMachine)
 parserStateMachine =
   parseInitialState <|>
-  parseStates  
+  parseStates
 
 
 parseStates :: Parsec String () (Transformation StateMachine)
 parseStates =
-  string "setInitialState" >> many space >> string "("
+  string "addState" >> many space >> string "("
   >> pStates >>= \ns -> string ")" >>
   return (setStates ns)
 
@@ -36,5 +36,3 @@ pStates =
   try (parseState >>= \n -> char ',' >> pStates >>= \ns -> return (n:ns))
   <|>
   (parseState >>= \r -> return [r])
-  
-

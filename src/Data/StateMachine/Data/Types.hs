@@ -1,31 +1,59 @@
+{-# LANGUAGE TemplateHaskell #-}
+
 module Data.StateMachine.Data.Types where
 
--- import Data.SPL
+import Data.SPL hiding (Target)
+import Control.Lens
 
-type Trace = [State]
-type Var = String
+type Trace     = [State]
+
+type Var       = String
 type Label     = String
+type Event     = String
+
 type Origin    = State
 type Target    = State
-type Event     = String
+
 type Action    = [(Var -> (Int -> Int) -> StateMachine -> StateMachine)]
 type Condition = [(Var -> (Int -> Bool) -> StateMachine -> Bool)]
+
 type Memory = [(Var, Int)]
 
 data State =
-    InitialState 
+    InitialState
   | FinalState
   | State Label
-  deriving (Show)
+  deriving (Show, Eq)
 
 type Transition =  (Origin, Event, Condition, Action, Target)
 
 data StateMachine =
   StateMachine {
-    states :: [State],
-    transitions :: [Transition],
-    memory :: Memory
+    _states :: [State],
+    _transitions :: [Transition],
+    _memory :: Memory
   }
+makeLenses ''StateMachine
+
+
+-- Transformations
+
+addState :: State -> Transformation StateMachine
+addState s _ = fmap $ over states (s :)
+
+addTransition :: Transition -> Transformation StateMachine
+addTransition t _ = fmap $ over (transitions) (t :)
+
+removeState :: State -> Transformation StateMachine
+removeState s _ = fmap $ over (states) (removeFromList s)
+
+removeTransition :: Transition -> Transformation StateMachine
+removeTransition t _ = fmap $ over (transitions) (removeFromList t)
+
+
+
+removeFromList :: (Eq a) => a -> [a] -> [a]
+removeFromList el xs = filter (\x -> x /= el) xs
 
 
 -- typeChecker :: StateMachine -> Bool
@@ -60,19 +88,3 @@ data StateMachine =
 --      (State "moneyError", State "insertMoney"),
 --      (State "buyProduct", FinalState "deliverProduct")
 --     ]
-
-
-
--- Transformations
---
--- setInitialState :: State -> Transformation StateMachine
--- setInitialState s _ (Product p) =
---   Product $ p { initialState = s }
---
--- setTransitionsList :: [Transition] -> Transformation StateMachine
--- setTransitionsList ts _ (Product p) =
---   Product $ p { transitions = ts }
---
--- setStates :: [State] -> Transformation StateMachine
--- setStates ss _ (Product p) =
---   Product $ p { states = ss }
