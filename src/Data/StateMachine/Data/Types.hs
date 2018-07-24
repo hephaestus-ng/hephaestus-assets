@@ -1,4 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 
 module Data.StateMachine.Data.Types where
 
@@ -25,7 +26,7 @@ data State =
   | State Label
   deriving (Show, Eq)
 
-type Transition =  (Origin, Event, Condition, Action, Target)
+type Transition = (Origin, Event, Condition, Action, Target)
 
 data StateMachine =
   StateMachine {
@@ -36,10 +37,14 @@ data StateMachine =
 makeLenses ''StateMachine
 
 
+
 -- Transformations
 
+-- modifyMemory :: Var -> Int -> Transformation StateMachine
+-- modifyMemory v i (Product sm) = undefined
+
 addState :: State -> Transformation StateMachine
-addState s _ = fmap $ over states (s :)
+addState s _ = fmap $ over (states) (s :)
 
 addTransition :: Transition -> Transformation StateMachine
 addTransition t _ = fmap $ over (transitions) (t :)
