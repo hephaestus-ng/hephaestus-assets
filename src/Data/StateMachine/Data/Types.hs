@@ -25,7 +25,8 @@ data State =
   | State Label
   deriving (Show, Eq)
 
-type Transition =  (Origin, Event, Condition, Action, Target)
+type Transition = (Origin, Event, Condition, Action, Target)
+
 
 data StateMachine =
   StateMachine {

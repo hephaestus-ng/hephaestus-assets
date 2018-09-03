@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 	<featureModel chosenLayoutAlgorithm="1">
 		<struct>
-      <and mandatory="true" name="stateMachine">
-  			<alt mandatory="true" name="transition">
+      <and mandatory="true" name="vendingMachine">
+  			<or mandatory="true" name="beverage">
           <feature mandatory="true" name="withConditions"/>
           <feature mandatory="true" name="direct"/>
-  			</alt>
+  			</or>
 				<alt mandatory="true" name="nodeType">
           <feature mandatory="true" name="string"/>
           <feature mandatory="true" name="numeric"/>

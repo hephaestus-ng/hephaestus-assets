@@ -13,23 +13,42 @@ parserStateMachine =
   parseStates
 
 
-parseStates :: Parsec String () (Transformation StateMachine)
-parseStates =
+parseAddState :: Parsec String () (Transformation StateMachine)
+parseAddState =
   string "addState" >> many space >> string "("
-  >> pStates >>= \ns -> string ")" >>
-  return (setStates ns)
+  >> parseState >>= \ns -> string ")" >>
+  return (addState ns)
 
 
-parseInitialState :: Parsec String () (Transformation StateMachine)
+parseRemoveState :: Parsec String () (Transformation StateMachine)
 parseInitialState =
-  string "setStates" >> many space >> string "("
+  string "removeState" >> many space >> string "("
   >> parseState >>= \s -> string ")" >>
-  return (setInitialState s)
+  return (removeState s)
+
+
+parseAddTransition :: Parsec String () (Transformation StateMachine)
+parseAddTransition =
+  string "addTransition" >> many space >> string "("
+  >> parseTransition >>= \t -> string ")" >>
+  return (addTransition (Transition t))
 
 
 parseState :: Parsec String () State
 parseState =
   string "\"" >> many1 letter >>= \c -> string "\"" >> return (State c)
+
+
+parseTransition :: Parsec String () Transition
+parseTransition =
+  many1 letter >>= \o -> string "," >>
+  many1 letter >>= \e -> string "," >>
+  many1 letter >>= \c -> string "," >>
+  many1 letter >>= \a -> string "," >>
+  many1 letter >>= \t ->
+  return (State o, Event e, Condition c, Action a, Target t)
+
+  return (State c)
 
 
 pStates =
