@@ -10,13 +10,14 @@ type Trace     = [State]
 
 type Var       = String
 type Label     = String
-type Event     = String
 
+-- type Event     = String
 type Origin    = State
 type Target    = State
 
-type Action    = [(Var -> (Int -> Int) -> StateMachine -> StateMachine)]
-type Condition = [(Var -> (Int -> Bool) -> StateMachine -> Bool)]
+-- type Action    = [(Var -> (Int -> Int) -> StateMachine -> StateMachine)]
+-- type Condition = Var -> (Int -> Bool) -> StateMachine -> Bool
+type Condition = Var -> Memory -> Bool
 
 type Memory = [(Var, Int)]
 
@@ -26,8 +27,8 @@ data State =
   | State Label
   deriving (Show, Eq)
 
-type Transition = (Origin, Event, Condition, Action, Target)
-
+-- type Transition = (Origin, Event, Condition, Action, Target)
+type Transition = (Id, Origin, Condition, Target)
 
 data StateMachine =
   StateMachine {
@@ -38,11 +39,12 @@ data StateMachine =
 makeLenses ''StateMachine
 
 
-
 -- Transformations
 
 -- modifyMemory :: Var -> Int -> Transformation StateMachine
 -- modifyMemory v i (Product sm) = undefined
+-- editMemory :: (Var, Int) -> Transformation StateMachine
+-- editMemory = undefined
 
 addState :: State -> Transformation StateMachine
 addState s _ = fmap $ over (states) (s :)
@@ -50,16 +52,16 @@ addState s _ = fmap $ over (states) (s :)
 addTransition :: Transition -> Transformation StateMachine
 addTransition t _ = fmap $ over (transitions) (t :)
 
-removeState :: State -> Transformation StateMachine
-removeState s _ = fmap $ over (states) (removeFromList s)
-
-removeTransition :: Transition -> Transformation StateMachine
-removeTransition t _ = fmap $ over (transitions) (removeFromList t)
-
-
-
-removeFromList :: (Eq a) => a -> [a] -> [a]
-removeFromList el xs = filter (\x -> x /= el) xs
+-- removeState :: State -> Transformation StateMachine
+-- removeState s _ = fmap $ over (states) (removeFromList s)
+--
+-- removeTransition :: Transition -> Transformation StateMachine
+-- removeTransition t _ = fmap $ over (transitions) (removeFromList t)
+--
+--
+--
+-- removeFromList :: (Eq a) => a -> [a] -> [a]
+-- removeFromList el xs = filter (\x -> x /= el) xs
 
 
 -- typeChecker :: StateMachine -> Bool

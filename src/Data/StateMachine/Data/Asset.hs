@@ -15,8 +15,8 @@ instance Asset StateMachine where
 
 
 
-
+--
 initState = StateMachine (State "") [(State "")] [t]
-
-t :: Transition
-t (State s) = State s
+--
+-- t :: Transition
+-- t (State s) = State s

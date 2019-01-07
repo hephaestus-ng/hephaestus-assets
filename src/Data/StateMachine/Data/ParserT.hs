@@ -9,8 +9,8 @@ import Data.SPL
 
 parserStateMachine :: Parsec String () (Transformation StateMachine)
 parserStateMachine =
-  parseInitialState <|>
-  parseStates
+  parseAddState <|>
+  parseAddTransition
 
 
 parseAddState :: Parsec String () (Transformation StateMachine)
@@ -20,18 +20,18 @@ parseAddState =
   return (addState ns)
 
 
-parseRemoveState :: Parsec String () (Transformation StateMachine)
-parseInitialState =
-  string "removeState" >> many space >> string "("
-  >> parseState >>= \s -> string ")" >>
-  return (removeState s)
+-- parseRemoveState :: Parsec String () (Transformation StateMachine)
+-- parseInitialState =
+--   string "removeState" >> many space >> string "("
+--   >> parseState >>= \s -> string ")" >>
+--   return (removeState s)
 
 
 parseAddTransition :: Parsec String () (Transformation StateMachine)
 parseAddTransition =
   string "addTransition" >> many space >> string "("
   >> parseTransition >>= \t -> string ")" >>
-  return (addTransition (Transition t))
+  return (addTransition t)
 
 
 parseState :: Parsec String () State
@@ -41,17 +41,15 @@ parseState =
 
 parseTransition :: Parsec String () Transition
 parseTransition =
-  many1 letter >>= \o -> string "," >>
+  many1 letter >>= \s -> string "," >>
   many1 letter >>= \e -> string "," >>
   many1 letter >>= \c -> string "," >>
   many1 letter >>= \a -> string "," >>
   many1 letter >>= \t ->
-  return (State o, Event e, Condition c, Action a, Target t)
-
-  return (State c)
+  return (State s, c, t)
 
 
-pStates =
-  try (parseState >>= \n -> char ',' >> pStates >>= \ns -> return (n:ns))
-  <|>
-  (parseState >>= \r -> return [r])
+-- pStates =
+--   try (parseState >>= \n -> char ',' >> pStates >>= \ns -> return (n:ns))
+--   <|>
+--   (parseState >>= \r -> return [r])

@@ -2,15 +2,17 @@
 	<featureModel chosenLayoutAlgorithm="1">
 		<struct>
       <and mandatory="true" name="vendingMachine">
-  			<or mandatory="true" name="beverage">
-          <feature mandatory="true" name="withConditions"/>
-          <feature mandatory="true" name="direct"/>
+				<or mandatory="true" name="restrictions">
+          <feature mandatory="true" name="maxProducts"/>
+          <feature mandatory="true" name="minPrice"/>
   			</or>
-				<alt mandatory="true" name="nodeType">
-          <feature mandatory="true" name="string"/>
-          <feature mandatory="true" name="numeric"/>
-          <feature mandatory="true" name="data"/>
-  			</alt>
+				<alt mandatory="true" name="products">
+          <feature mandatory="true" name="food"/>
+					<or mandatory="true" name="beverage">
+						<feature mandatory="true" name="soda"/>
+						<feature mandatory="true" name="juice"/>
+					</or>
+				</alt>
       </and>
 		</struct>
     <calculations Auto="true" Constraints="true" Features="true" Redundant="true"/>
