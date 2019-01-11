@@ -5,16 +5,18 @@ import Control.Lens
 import Control.Exception
 
 import Data.SourceCode.Data.ParserT
+import Data.SourceCode.Data.ParserA
 import Data.SourceCode.Data.Types
 
 import Data.SPL
 
 
 instance Asset ComponentModel where
-  initialize  = Product (ComponentModel [] [] [] [])
+  initialize  = Product (ComponentModel [] [] [] [] [])
   parserT     = parserSourceCode
+  parserA     = parserAssetBase
 
-  export src trg (Product prod) =
+  export src trg ab (Product prod) =
     bracket
       (openFile trg WriteMode)
       hClose
