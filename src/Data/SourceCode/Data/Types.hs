@@ -3,18 +3,18 @@ module Data.SourceCode.Data.Types where
 
 import Control.Lens
 import Data.SPL
+import System.IO
 
-type Tag        = String
-type FileSource = String
+type Tag     = String
 
-type Component = (Tag, [FileSource])
+type Component = (Tag, [FilePath])
 
 data ComponentModel = ComponentModel {
   _components         :: [Component], -- initiate with parserA
   _selectedComponents :: [Tag], -- copiar filename do source para target
   _removedComponents  :: [Tag],
   _includedTags       :: [Tag],
-  _preprocessFiles    :: [FileSource]
+  _preprocessFiles    :: [FilePath]
 } deriving (Show)
 makeLenses ''ComponentModel
 
